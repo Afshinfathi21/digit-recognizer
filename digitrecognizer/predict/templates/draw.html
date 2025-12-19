@@ -1,0 +1,64 @@
+<canvas id="canvas" width="280" height="280" 
+        style="border:1px solid black;"></canvas>
+
+<br><br>
+
+<button onclick="clearCanvas()">Clear</button>
+<button onclick="sendImage()">Predict</button>
+
+<h2 id="result">Prediction: —</h2>
+
+<script>
+const canvas = document.getElementById("canvas");
+const ctx = canvas.getContext("2d");
+ctx.fillStyle = "black";
+ctx.fillRect(0, 0, canvas.width, canvas.height);
+ctx.lineWidth = 20;
+ctx.lineCap = "round";
+ctx.strokeStyle = "white";
+
+
+let drawing = false;
+
+canvas.onmousedown = () => drawing = true;
+canvas.onmouseup = () => drawing = false;
+canvas.onmousemove = draw;
+
+function draw(e) {
+    if (!drawing) return;
+    ctx.beginPath();
+    ctx.moveTo(e.offsetX, e.offsetY);
+    ctx.lineTo(e.offsetX + 1, e.offsetY + 1);
+    ctx.stroke();
+    
+}
+
+function clearCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    document.getElementById("result").innerText = "Prediction: —";
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+}
+
+function sendImage() {
+    const dataURL = canvas.toDataURL("image/png");
+
+    fetch("/predict/", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": "{{ csrf_token }}"
+        },
+        body: JSON.stringify({ image: dataURL })
+    })
+    .then(response => response.json())
+    .then(data => {
+        document.getElementById("result").innerText =
+            "Prediction: " + data.prediction;
+    })
+    .catch(err => {
+        document.getElementById("result").innerText =
+            "Prediction failed";
+    });
+}
+</script>
