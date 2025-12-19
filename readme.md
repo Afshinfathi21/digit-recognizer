@@ -2,10 +2,12 @@
 
 This project is a web-based handwritten digit recognition system built using a **neural network trained from scratch on the MNIST dataset** and integrated into a **Django web application**. Users can draw a digit on a canvas, and the model predicts the digit drawn by the user.
 
-![Project Demo](static/2.png)
-![Project Demo](static/6.png)
-![Project Demo](static/9.png)
-![Project Demo](static/3.png)
+<p align="center">
+  <img src="static/6.png" width="300" />
+  <img src="static/2.png" width="300" />
+  <img src="static/9.png" width="300" />
+  <img src="static/3.png" width="300" />
+</p>
 
 ---
 
