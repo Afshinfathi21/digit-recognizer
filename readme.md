@@ -113,10 +113,10 @@ Ensure the following are installed on your system:
 
 ### Step 1: Clone the Repository
 
-```bash
+```bash powershell
 git clone https://github.com/Afshinfathi21/digit-recognizer.git
-python3 -m venv venv
-source venv/bin/activate
+python -m venv venv
+venv/Scripts/activate
 pip install -r requirements.txt
 cd digit-recognizer
 python manage.py runserver
